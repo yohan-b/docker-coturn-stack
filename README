@@ -1,2 +1,0 @@
-A secret must be defined before starting the stack :
-echo "FIXME" > .env
