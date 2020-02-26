@@ -7,6 +7,12 @@ sudo chmod a-r secret
 sudo mv -f secret .env
 
 unset VERSION_COTURN
-VERSION_COTURN=$(git ls-remote https://git.scimetis.net/yohan/docker-coturn.git| head -1 | cut -f 1|cut -c -10) \
- sudo -E bash -c 'docker-compose up -d'
+export VERSION_COTURN=$(git ls-remote https://git.scimetis.net/yohan/docker-coturn.git| head -1 | cut -f 1|cut -c -10)
 
+mkdir -p ~/build
+git clone https://git.scimetis.net/yohan/docker-coturn.git ~/build/docker-coturn
+sudo docker build -t coturn:$VERSION_COTURN ~/build/docker-coturn
+
+sudo -E bash -c 'docker-compose up -d'
+
+rm -rf ~/build
